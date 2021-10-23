@@ -19,7 +19,7 @@ import (
 	"github.com/cilium/ebpf/rlimit"
 )
 
-//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang-12 -cflags -D__x86_64__ bpf ./bpf/libstapsdt.c -- -I./bpf
+//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang-12 -cflags -D__x86_64__ bpf ./bpf/usdt.c -- -I./bpf
 
 type Event struct {
 	Counter uint32
@@ -43,7 +43,7 @@ func main() {
 	defer objs.Close()
 
 	// Run the tracee in the background.
-	cmd := exec.Command("python", "./libstapsdt/tracee.py")
+	cmd := exec.Command("python", "./python-stapsdt/tracee.py")
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	if err := cmd.Start(); err != nil {
@@ -55,7 +55,7 @@ func main() {
 		}
 	}()
 
-	// Python and libstapsdt require some time to setup the providers.
+	// Python require some time to setup the providers.
 	time.Sleep(200 * time.Millisecond)
 
 	// Open Executable on the tracee PID.
