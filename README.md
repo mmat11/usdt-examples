@@ -7,7 +7,7 @@ This repo contains examples using a [PoC implementation of USDT probes](https://
 
 [libstapsdt](libstapsdt/) instruments a Python script with [python-stapsdt](https://github.com/sthima/python-stapsdt) and shows how to send the probe args to userspace via a ringbuffer:
 
-```
+```console
 (venv) ~/g/m/usdt-examples *main> go run -exec sudo ./libstapsdt/
 TRACEE (0): fired 77f47f5f-51b1-4a82-827a-d8d66f590118
 2021/10/23 22:32:48 Waiting for events..
