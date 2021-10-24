@@ -14,14 +14,15 @@ Dependencies: [libstapsdt](https://github.com/linux-usdt/libstapsdt), [python-st
 ```console
 ~ go run -exec sudo ./python-stapsdt/
 
-INFO:root:counter=0, uuid=d4e857f9-3c80-4017-9f16-7623cac2e5d4
-2021/10/23 23:45:25 Waiting for events..
-2021/10/23 23:45:26 New event (1): 8364b259-018f-4770-9b0d-a151ae69bcb8
-INFO:root:counter=1, uuid=8364b259-018f-4770-9b0d-a151ae69bcb8
-2021/10/23 23:45:26 New event (2): 070e5caa-efcc-41b0-9c55-c2cfdaa5e49b
-INFO:root:counter=2, uuid=070e5caa-efcc-41b0-9c55-c2cfdaa5e49b
-2021/10/23 23:45:27 New event (3): d8bf5088-7db1-438d-9aa1-4b3b8f6fa5c5
-INFO:root:counter=3, uuid=d8bf5088-7db1-438d-9aa1-4b3b8f6fa5c5
+INFO:root:counter=0, uuid=ffba5aac-e917-48aa-b1c4-be330db99069
+2021/10/24 22:05:59 Waiting for events..
+2021/10/24 22:06:00 New event: 1 ad5b87bb-9a4d-4b7b-99b4-802c6dab5ef2
+INFO:root:counter=1, uuid=ad5b87bb-9a4d-4b7b-99b4-802c6dab5ef2
+INFO:root:counter=2, uuid=ff8c3113-008c-4349-823a-84459ec8f33d
+2021/10/24 22:06:00 New event: 2 ff8c3113-008c-4349-823a-84459ec8f33d
+2021/10/24 22:06:01 New event: 3 0a760cdf-1166-4bc5-8777-51e6be8bf826
+INFO:root:counter=3, uuid=0a760cdf-1166-4bc5-8777-51e6be8bf826
+2021/10/24 22:06:01 New event: 4 48b26f7b-6222-408f-b6d3-fdcbc5fbcd45
 ```
 
 ### Python (builtin SDT notes with semaphore)
