@@ -6,6 +6,7 @@ package main
 import (
 	"encoding/binary"
 	"errors"
+	"flag"
 	"log"
 	"os"
 	"os/exec"
@@ -35,10 +36,11 @@ func main() {
 	}
 	defer objs.Close()
 
-	_, withSemaphore := os.LookupEnv("WITH_SEMAPHORE")
+	sem := flag.Bool("semaphore", false, "if set, use the semaphored tracee")
+	flag.Parse()
 
 	tracee := "c/tracee/tracee.o"
-	if withSemaphore {
+	if *sem {
 		tracee = "c/tracee_semaphore/tracee.o"
 	}
 

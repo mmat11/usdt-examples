@@ -68,17 +68,17 @@ tracee: run 3
 2021/10/24 21:48:33 New event: 3
 ```
 
-Another example which uses a different tracee can be run by setting the `WITH_SEMAPHORE` environment variable.
+Another example which uses a different tracee can be run by setting the `-semaphore` flag:
 
 ```console
-~ WITH_SEMAPHORE=1 go run -exec sudo ./c/
+~ go run -exec sudo ./c/ -semaphore
 
-tracee: run 0
-2021/10/24 21:47:40 Waiting for events..
-tracee: run 1
-2021/10/24 21:47:41 New event: 1
-tracee: run 2
-2021/10/24 21:47:41 New event: 2
-tracee: run 3
-2021/10/24 21:47:42 New event: 3
+tracee (with semaphore): run 0
+2021/10/24 21:55:36 Waiting for events..
+tracee (with semaphore): run 1
+2021/10/24 21:55:37 New event: 1
+tracee (with semaphore): run 2
+2021/10/24 21:55:37 New event: 2
+tracee (with semaphore): run 3
+2021/10/24 21:55:38 New event: 3
 ```
