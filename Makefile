@@ -20,5 +20,6 @@ bpf:
 
 clean:
 	find . -name "*.o" -type f -delete
+	find . -name "*.so" -type f -delete
 	find . -name "*_bpfel.go" -type f -delete
 	find . -name "*_bpfeb.go" -type f -delete
