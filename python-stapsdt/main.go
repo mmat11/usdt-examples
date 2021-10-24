@@ -19,11 +19,11 @@ import (
 	"github.com/cilium/ebpf/rlimit"
 )
 
-//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang-12 -cflags -D__x86_64__ bpf ./bpf/usdt.c -- -I./bpf
+//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang-12 -cflags -D__x86_64__ bpf ./bpf/usdt.c -- -I../headers
 
 type Event struct {
 	Counter uint32
-	Uuid    [37]byte
+	Uuid    [36 + 1]byte
 }
 
 func main() {
