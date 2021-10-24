@@ -19,6 +19,7 @@ bpf:
 	BPF_CFLAGS="-D__x86_64__ $(CFLAGS)" go generate ./...
 
 clean:
+	rm -f c/tracee_semaphore/provider.h
 	find . -name "*.o" -type f -delete
 	find . -name "*.so" -type f -delete
 	find . -name "*_bpfel.go" -type f -delete
