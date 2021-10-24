@@ -53,21 +53,32 @@ tracee: floordiv(100,5) = 20
 
 ### C
 
-[c-simple](c-simple/) demonstrates how to read arguments exported via SDT notes on a C executable:
+[c](c/) demonstrates how to read arguments exported via SDT notes on a C executable:
 
 ```console
-~ go run -exec sudo ./c-simple/
+~ go run -exec sudo ./c/
 
 tracee: run 0
-2021/10/24 16:24:29 Waiting for events..
+2021/10/24 21:48:32 Waiting for events..
 tracee: run 1
-2021/10/24 16:24:30 New event: 1
+2021/10/24 21:48:32 New event: 1
 tracee: run 2
-2021/10/24 16:24:31 New event: 2
+2021/10/24 21:48:32 New event: 2
 tracee: run 3
-2021/10/24 16:24:32 New event: 3
+2021/10/24 21:48:33 New event: 3
 ```
 
-### C (semaphore)
+Another example which uses a different tracee can be run by setting the `WITH_SEMAPHORE` environment variable.
 
-TODO
+```console
+~ WITH_SEMAPHORE=1 go run -exec sudo ./c/
+
+tracee: run 0
+2021/10/24 21:47:40 Waiting for events..
+tracee: run 1
+2021/10/24 21:47:41 New event: 1
+tracee: run 2
+2021/10/24 21:47:41 New event: 2
+tracee: run 3
+2021/10/24 21:47:42 New event: 3
+```

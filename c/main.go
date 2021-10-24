@@ -35,8 +35,15 @@ func main() {
 	}
 	defer objs.Close()
 
+	_, withSemaphore := os.LookupEnv("WITH_SEMAPHORE")
+
+	tracee := "c/tracee/tracee.o"
+	if withSemaphore {
+		tracee = "c/tracee_semaphore/tracee.o"
+	}
+
 	// Run the tracee in the background.
-	cmd := exec.Command("c-simple/tracee/tracee.o")
+	cmd := exec.Command(tracee)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	if err := cmd.Start(); err != nil {
