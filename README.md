@@ -6,9 +6,10 @@ To regenerate all objects, run `make all`.
 
 ### Python (stapsdt)
 
+Dependencies: [libstapsdt](https://github.com/linux-usdt/libstapsdt), [python-stapsdt](https://github.com/linux-usdt/python-stapsdt)
+
 [python-stapsdt](python-stapsdt/) instruments a Python script with python-stapsdt have a bpf program which forwards the probe args to userspace:
 
-Dependencies: [libstapsdt](https://github.com/linux-usdt/libstapsdt), [python-stapsdt](https://github.com/linux-usdt/python-stapsdt)
 
 ```console
 ~ go run -exec sudo ./python-stapsdt/
@@ -32,6 +33,8 @@ INFO:root:counter=7, uuid=3111c754-760a-4835-b5a4-c6f8e127114c
 ```
 
 ### C
+
+[c-simple](c-simple/) demonstrates how to read arguments exported via SDT notes on a C executable:
 
 ```console
 ~ go run -exec sudo ./c-simple/
