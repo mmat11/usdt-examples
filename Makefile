@@ -1,7 +1,10 @@
 CLANG ?= clang-12
 CFLAGS := -O2 -Wall -Werror
 
-all: clean c_simple c_sem bpf
+all: clean c_simple c_sem btf bpf
+
+btf:
+	bpftool btf dump file /sys/kernel/btf/vmlinux format c > headers/vmlinux.h
 
 lint:
 	black .
@@ -19,6 +22,7 @@ bpf:
 	BPF_CFLAGS="-D__x86_64__ $(CFLAGS)" go generate ./...
 
 clean:
+	rm -f headers/vmlinux.h
 	rm -f c/tracee_semaphore/provider.h
 	find . -name "*.o" -type f -delete
 	find . -name "*.so" -type f -delete
