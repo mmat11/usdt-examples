@@ -4,9 +4,9 @@
 
 int main() {
     for (int i = 0;; i++) {
-        printf("tracee: firing %d\n", i);
+        printf("tracee: run %d\n", i);
         DTRACE_PROBE1(Capp, Cprobe, i);
-        sleep(1);
+        usleep(500000); // 0.5s
     }
     return 0;
 }

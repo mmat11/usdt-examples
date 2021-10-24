@@ -36,7 +36,7 @@ func main() {
 	defer objs.Close()
 
 	// Run the tracee in the background.
-	cmd := exec.Command("./c-simple/tracee/tracee.o")
+	cmd := exec.Command("c-simple/tracee/tracee.o")
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	if err := cmd.Start(); err != nil {

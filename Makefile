@@ -3,6 +3,10 @@ CFLAGS := -O2 -Wall -Werror
 
 all: clean c bpf
 
+lint:
+	black .
+	isort .
+
 c:
 	$(CLANG) $(CFLAGS) ./c-simple/tracee/tracee.c -o ./c-simple/tracee/tracee.o
 

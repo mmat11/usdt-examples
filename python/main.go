@@ -22,8 +22,8 @@ import (
 //go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang-12 -cflags $BPF_CFLAGS bpf ./bpf/usdt.c -- -I../headers
 
 type Event struct {
-	Counter uint32
-	Uuid    [36 + 1]byte
+	Filename [100 + 1]byte
+	FnName   [100 + 1]byte
 }
 
 func main() {
@@ -43,7 +43,7 @@ func main() {
 	defer objs.Close()
 
 	// Run the tracee in the background.
-	cmd := exec.Command("python", "python-stapsdt/tracee.py")
+	cmd := exec.Command("python", "python/tracee.py")
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	if err := cmd.Start(); err != nil {
@@ -65,7 +65,7 @@ func main() {
 	}
 
 	// Open USDT and attach it to the ebpf program.
-	u, err := e.USDT("pyapp", "pyprobe", objs.Handler)
+	u, err := e.USDT("python", "function__entry", objs.Handler)
 	if err != nil {
 		log.Fatalf("open USDT: %v", err)
 	}
@@ -106,6 +106,7 @@ func main() {
 			log.Printf("parsing ringbuf event: %v", err)
 			continue
 		}
-		log.Printf("New event: %d %s\n", event.Counter, event.Uuid)
+
+		log.Printf("New event: %s:%s()\n", event.Filename, event.FnName)
 	}
 }
