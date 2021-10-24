@@ -4,7 +4,6 @@
 package main
 
 import (
-	"bytes"
 	"encoding/binary"
 	"errors"
 	"log"
@@ -12,7 +11,6 @@ import (
 	"os/exec"
 	"os/signal"
 	"syscall"
-	"time"
 
 	"github.com/cilium/ebpf/link"
 	"github.com/cilium/ebpf/ringbuf"
@@ -20,11 +18,6 @@ import (
 )
 
 //go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang-12 -cflags $BPF_CFLAGS bpf ./bpf/usdt.c -- -I../headers
-
-type Event struct {
-	Counter uint32
-	Uuid    [36 + 1]byte
-}
 
 func main() {
 	stopper := make(chan os.Signal, 1)
@@ -43,7 +36,7 @@ func main() {
 	defer objs.Close()
 
 	// Run the tracee in the background.
-	cmd := exec.Command("python", "./python-stapsdt/tracee.py")
+	cmd := exec.Command("./c-simple/tracee/tracee.o")
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	if err := cmd.Start(); err != nil {
@@ -55,9 +48,6 @@ func main() {
 		}
 	}()
 
-	// Python require some time to setup the providers.
-	time.Sleep(200 * time.Millisecond)
-
 	// Open Executable on the tracee PID.
 	e, err := link.OpenExecutable(link.WithPID(cmd.Process.Pid))
 	if err != nil {
@@ -65,7 +55,7 @@ func main() {
 	}
 
 	// Open USDT and attach it to the ebpf program.
-	u, err := e.USDT("pyapp", "pyprobe", objs.Handler)
+	u, err := e.USDT("Capp", "Cprobe", objs.Handler)
 	if err != nil {
 		log.Fatalf("open USDT: %v", err)
 	}
@@ -99,13 +89,6 @@ func main() {
 			log.Printf("reading from reader: %v", err)
 			continue
 		}
-
-		// Parse the ringbuf event entry into an Event structure.
-		var event Event
-		if err := binary.Read(bytes.NewBuffer(record.RawSample), binary.LittleEndian, &event); err != nil {
-			log.Printf("parsing ringbuf event: %v", err)
-			continue
-		}
-		log.Printf("New event (%d): %s\n", event.Counter, event.Uuid)
+		log.Printf("New event: %d\n", binary.LittleEndian.Uint32(record.RawSample))
 	}
 }

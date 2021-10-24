@@ -2,10 +2,13 @@
 
 This repo contains examples using a [PoC implementation of USDT probes](https://github.com/cilium/ebpf/compare/master...mmat11:matt/usdt)
 
+To regenerate all objects, run `make all`.
 
-### Libstapsdt
+### Python (stapsdt)
 
-[python-stapsdt](python-stapsdt/) instruments a Python script with https://github.com/linux-usdt/python-stapsdt and sends the probe args to userspace:
+[python-stapsdt](python-stapsdt/) instruments a Python script with python-stapsdt have a bpf program which forwards the probe args to userspace:
+
+Dependencies: [libstapsdt](https://github.com/linux-usdt/libstapsdt), [python-stapsdt](https://github.com/linux-usdt/python-stapsdt)
 
 ```console
 ~ go run -exec sudo ./python-stapsdt/
@@ -28,14 +31,29 @@ INFO:root:counter=6, uuid=da0717e9-1982-418e-8738-2fc3dbbfae7e
 INFO:root:counter=7, uuid=3111c754-760a-4835-b5a4-c6f8e127114c
 ```
 
+### C
+
+```console
+~ go run -exec sudo ./c-simple/
+
+tracee: firing 0
+2021/10/24 16:24:29 Waiting for events..
+tracee: firing 1
+2021/10/24 16:24:30 New event: 1
+tracee: firing 2
+2021/10/24 16:24:31 New event: 2
+tracee: firing 3
+2021/10/24 16:24:32 New event: 3
+tracee: firing 4
+2021/10/24 16:24:33 New event: 4
+tracee: firing 5
+2021/10/24 16:24:34 New event: 5
+```
+
+### C (semaphore)
+
+TODO
+
 ### Python (.so SDT notes)
-
-TODO
-
-### Dtrace
-
-TODO
-
-### Dtrace with semaphore
 
 TODO
